@@ -17,10 +17,15 @@
 # Release name
 PRODUCT_RELEASE_NAME := mido
 
-$(call inherit-product, build/target/product/embedded.mk)
+# 引用默认的编译配置文件，core_64_bit必须先于其他引用，否则不生效
+$(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/core_minimal.mk)
 
-# Inherit from our custom product configuration
-$(call inherit-product, vendor/omni/config/common.mk)
+# Inherit from mido device
+$(call inherit-product, device/xiaomi/mido/mido.mk)
+
+# Inherit some common TWRP stuff.
+$(call inherit-product, vendor/twrp/config/common.mk)
 
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.hardware.keystore=msm8953
