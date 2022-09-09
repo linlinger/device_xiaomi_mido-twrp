@@ -34,8 +34,14 @@ TARGET_BOOTLOADER_BOARD_NAME := mido
 TARGET_NO_BOOTLOADER := true
 
 # Crypto
-TARGET_CRYPTFS_HW_PATH := vendor/qcom/opensource/commonsys/cryptfs_hw
-TARGET_HW_DISK_ENCRYPTION := true
+TW_INCLUDE_CRYPTO := true
+
+# Hack: prevent anti rollback
+PLATFORM_SECURITY_PATCH := 2099-12-31
+VENDOR_SECURITY_PATCH := $(PLATFORM_SECURITY_PATCH)
+PLATFORM_VERSION := 12
+PLATFORM_VERSION_LAST_STABLE := $(PLATFORM_VERSION)
+
 
 # Kernel
 BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.console=ttyHSL0 androidboot.hardware=qcom msm_rtb.filter=0x237 ehci-hcd.park=3 lpm_levels.sleep_disabled=1 androidboot.bootdevice=7824900.sdhci earlycon=msm_hsl_uart,0x78af000 androidboot.selinux=permissive
@@ -82,7 +88,16 @@ TW_IGNORE_MISC_WIPE_DATA := true
 TW_INPUT_BLACKLIST := "hbtp_vm"
 TW_NO_EXFAT_FUSE := true
 
-TW_EXCLUDE_TWRPAPP := true
+# Language
+TW_DEFAULT_LANGUAGE := "zh_CN"
 
--include $(LOCAL_PATH)/BoardConfigSHRP.mk
--include vendor/kud/config/recovery.mk
+# Debug
+TWRP_INCLUDE_LOGCAT := true
+TARGET_USES_LOGD := true
+
+# haptics
+TW_SUPPORT_INPUT_1_2_HAPTICS := true
+
+# Tool
+TW_INCLUDE_RESETPROP := true
+TW_INCLUDE_LIBRESETPROP := true
